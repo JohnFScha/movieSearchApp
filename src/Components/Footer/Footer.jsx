@@ -1,4 +1,5 @@
 import React from 'react'
+import { AiOutlineInstagram as IG, AiOutlineFacebook as FB, AiOutlineTwitter as TW } from 'react-icons/ai'
 
 const Footer = () => {
   return (
@@ -7,10 +8,10 @@ const Footer = () => {
         <p>Alkemy Challenge TM</p>
       </div>
       <div>
-        <ul className='flex justify-around'>
-          <li className='m-2'><a href="https://www.instagram.com/alkemy__/" target='_blank' rel='noopener noreferrer'>Instagram</a></li>
-          <li className='m-2'><a href="https://www.facebook.com/AlkemyLATAM" target='_blank' rel='noopener noreferrer'>Facebook</a></li>
-          <li className='m-2'><a href="https://twitter.com/alkemy__" target='_blank' rel='noopener noreferrer'>Twitter</a></li>
+        <ul className='flex justify-around gap-3'>
+          <li className='text-4xl'><a href="https://www.instagram.com/alkemy__/" target='_blank' rel='noopener noreferrer'><IG /></a></li>
+          <li className='text-4xl'><a href="https://www.facebook.com/AlkemyLATAM" target='_blank' rel='noopener noreferrer'><FB /></a></li>
+          <li className='text-4xl'><a href="https://twitter.com/alkemy__" target='_blank' rel='noopener noreferrer'><TW /></a></li>
         </ul>
       </div>
     </footer>

@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Link, Navigate } from "react-router-dom";
-import { Oval } from "react-loader-spinner";
+import { Navigate } from "react-router-dom";
+import { BiLeftArrow, BiRightArrow } from 'react-icons/bi'
+import MovieListContainer from "../MovieListContainer/MovieListContainer";
+import Loader from "../Loader/Loader";
+import { generateNumberArray } from "../../utils/createRange";
 
 const options = {
   method: "GET",
@@ -14,76 +17,51 @@ const options = {
 const Listado = () => {
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(true);
-  let token = localStorage.getItem("token");
+  const [page, setPage] = useState(1)
+  let token = sessionStorage.getItem("token");
+  const range = generateNumberArray(1, 10)
   
-
   useEffect(() => {
     const fetchMovies = async () => {
       const response = await fetch(
-        "https://api.themoviedb.org/3/movie/popular?language=en-US&page=20", options);
+         `https://api.themoviedb.org/3/movie/popular?language=en-US&page=${page}`,
+        options
+      );
       const data = await response.json();
       setMovies(data.results);
       setLoading(false);
     };
     setTimeout(() => {
       fetchMovies();
-    }, 3000);
-  }, [setMovies]);
+    }, 1500);
+  }, [page]);
+
+  const handlePage = (num) =>{
+    setPage(num)
+    setLoading(true)
+  }
 
   return (
     <>
       {!token && <Navigate to={"/"} />}
 
       {loading === true ? (
-        <section className="min-h-screen flex justify-center-center items-center">
-          <div className="spinner-container m-auto">
-            <Oval
-              height={100}
-              width={100}
-              color="#111"
-              wrapperStyle={{}}
-              wrapperClass="spinner-container"
-              visible={true}
-              ariaLabel="oval-loading"
-              secondaryColor="#000"
-              strokeWidth={2}
-              strokeWidthSecondary={2}
-            />
-          </div>
-        </section>
+        <Loader loading={loading}/>
       ) : (
         <main className="min-h-screen">
-          <h2 className="text-5xl text-center m-5">Popular:</h2>
+          <h2 className="text-4xl text-center italic my-5">Popular now</h2>
           <section className="grid grid-cols-4 gap-10 m-5">
-            {movies.map((movie) => {
-              return (
-                <article
-                  key={movie.id}
-                  className="grid grid-flow-row-dense justify-between border border-solid border-gray-500 rounded-md shadow-2xl shadow-slate-800 bg-cyan-900 text-white"
-                >
-                  <img
-                    src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-                    alt={movie.original_title}
-                    className="rounded-md"
-                  />
-                  <div className="flex flex-col gap-2 p-5">
-                    <h2 className="text-xl mt-2">Title: {movie.title}</h2>
-                    <p className="text-lg">
-                      Popularity: {movie.popularity.toFixed(2)}
-                    </p>
-                  <Link
-                    to={`/listado/${movie.id}`}
-                    className="rounded-md p-2 bg-black text-white mt-auto text-center"
-                  >
-                    View Details
-                  </Link>
-                  </div>
-                </article>
-              );
-            })}
+            <MovieListContainer movies={movies} />
           </section>
         </main>
       )}
+      <div className="flex justify-between w-2/3 mx-auto my-10">
+        {
+          range.map((num, idx) => {
+            return <button key={idx} onClick={() => handlePage(num)} className={page === num ? "p-4 rounded-lg bg-slate-300 text-black" : "p-4 rounded-lg bg-black text-white"}>{num}</button>
+          })
+        }
+      </div>
     </>
   );
 };

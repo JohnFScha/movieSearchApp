@@ -44,12 +44,12 @@ const Login = () => {
           showConfirmButton: true
         });
         const token = res.data.token;
-        localStorage.setItem("token", token);
+        sessionStorage.setItem("token", token);
         navigate('/')
       });
   };
 
-  let token = localStorage.getItem('token');
+  let token = sessionStorage.getItem('token');
 
   return (
     <>

@@ -4,6 +4,7 @@ import Listado from './Components/Listado/Listado'
 import Header from './Components/Header/Header';
 import Footer from './Components/Footer/Footer';
 import MovieDetail from './Components/MovieDetail/MovieDetail';
+import SearchList from './Components/SearchList/SearchList';
 import { Routes, Route } from 'react-router-dom'
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
       <Route exact path="/" element={<Login />} />
       <Route path="/listado" element={<Listado />}/>
       <Route path="/listado/:movieId" element={<MovieDetail />} />
+      <Route path='/busqueda' element={<SearchList />} />
     </Routes>
     <Footer />
     </>
