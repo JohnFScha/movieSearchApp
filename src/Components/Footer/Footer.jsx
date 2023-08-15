@@ -2,8 +2,10 @@ import React from 'react'
 
 const Footer = () => {
   return (
-    <footer className='bg-black text-white flex justify-between align-middle mt-2 relative bottom-0'>
-      <p className='m-0'>Alkemy Challenge TM</p>
+    <footer className='bg-black text-white flex justify-between items-stretch p-2 relative bottom-0'>
+      <div className='flex items-center'>
+        <p>Alkemy Challenge TM</p>
+      </div>
       <div>
         <ul className='flex justify-around'>
           <li className='m-2'><a href="https://www.instagram.com/alkemy__/" target='_blank' rel='noopener noreferrer'>Instagram</a></li>
