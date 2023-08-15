@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { AiOutlineHeart as Outline, AiFillHeart as Fill } from "react-icons/ai";
 
-const MovieListContainer = ({ movies }) => {
+const MovieListContainer = ({ movies, favs }) => {
   const [fav, setFav] = useState(() => {
     const storedFavorites = localStorage.getItem("favs");
     return storedFavorites ? JSON.parse(storedFavorites) : [];
@@ -25,7 +25,6 @@ const MovieListContainer = ({ movies }) => {
     }
   };
 
-  console.log(fav);
   return (
     <section className="grid grid-cols-4 gap-10 m-5">
       {movies.map((movie) => {

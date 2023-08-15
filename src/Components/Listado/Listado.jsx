@@ -53,10 +53,10 @@ const Listado = () => {
           <MovieListContainer movies={movies} />
         </main>
       )}
-      <div className="flex justify-between w-2/3 mx-auto my-10">
+      <div className="flex justify-between w-5/6 mx-auto my-10">
         {
           range.map((num, idx) => {
-            return <button key={idx} onClick={() => handlePage(num)} className={page === num ? "p-4 rounded-lg bg-slate-300 text-black" : "p-4 rounded-lg bg-black text-white"}>{num}</button>
+            return <button key={idx} onClick={() => handlePage(num)} className={page === num ? "w-16 p-4 rounded-lg bg-slate-300 text-black" : "w-16 p-4 rounded-lg bg-black text-white"}>{num}</button>
           })
         }
       </div>

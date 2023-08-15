@@ -6,7 +6,7 @@ import Footer from './Components/Footer/Footer';
 import MovieDetail from './Components/MovieDetail/MovieDetail';
 import SearchList from './Components/SearchList/SearchList';
 import Favorites from './Components/Favorites/Favorites';
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route } from 'react-router-dom';
 
 function App() {
   return (
