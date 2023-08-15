@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 const MovieListContainer = ({ movies }) => {
   
   return (
-    <>
+    <section className="grid grid-cols-4 gap-10 m-5">
       {movies.map((movie) => {
         return (
           <article
@@ -31,7 +31,7 @@ const MovieListContainer = ({ movies }) => {
           </article>
         );
       })}
-    </>
+    </section>
   );
 };
 

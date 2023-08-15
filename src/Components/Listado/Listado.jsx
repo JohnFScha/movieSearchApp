@@ -50,9 +50,7 @@ const Listado = () => {
       ) : (
         <main className="min-h-screen">
           <h2 className="text-4xl text-center italic my-5">Popular now</h2>
-          <section className="grid grid-cols-4 gap-10 m-5">
-            <MovieListContainer movies={movies} />
-          </section>
+          <MovieListContainer movies={movies} />
         </main>
       )}
       <div className="flex justify-between w-2/3 mx-auto my-10">

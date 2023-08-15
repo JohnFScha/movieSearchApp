@@ -2,6 +2,7 @@ import React, { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
+
 const Buscador = () => {
   const keywordRef = useRef();
   const navigate = useNavigate();
