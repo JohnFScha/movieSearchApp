@@ -1,4 +1,3 @@
-import './App.css';
 import Login from './Components/Login/Login';
 import Listado from './Components/Listado/Listado'
 import Header from './Components/Header/Header';

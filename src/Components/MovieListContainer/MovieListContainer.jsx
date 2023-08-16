@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { AiOutlineHeart as Outline, AiFillHeart as Fill } from "react-icons/ai";
 
-const MovieListContainer = ({ movies, favs }) => {
+const MovieListContainer = ({ movies }) => {
   const [fav, setFav] = useState(() => {
     const storedFavorites = localStorage.getItem("favs");
     return storedFavorites ? JSON.parse(storedFavorites) : [];
@@ -39,24 +39,26 @@ const MovieListContainer = ({ movies, favs }) => {
                 alt={movie.original_title}
                 className="rounded-md relative top-0"
               />
+            </div>
+            <div className="flex flex-col gap-2 p-5">
+              <div className="flex justify-between items-center">
+              <h2 className="text-xl">Title: {movie.title}</h2>
               {isMovieInFavorites(movie.id) ? (
                 <button
-                  className="ms-auto bg-black rounded-full text-3xl p-2 my-2"
+                  className="ms-auto rounded-full text-4xl p-2 my-2"
                   onClick={() => handleAddToFavorites(movie)}
                 >
                   <Fill />
                 </button>
               ) : (
                 <button
-                  className="ms-auto bg-black rounded-full text-3xl p-2 my-2"
+                  className="ms-auto rounded-full text-4xl p-2 my-2"
                   onClick={() => handleAddToFavorites(movie)}
                 >
                   <Outline />
                 </button>
               )}
-            </div>
-            <div className="flex flex-col gap-2 p-5">
-              <h2 className="text-xl">Title: {movie.title}</h2>
+              </div>
               <p className="text-lg">
                 Popularity: {movie.popularity.toFixed(2)}
               </p>

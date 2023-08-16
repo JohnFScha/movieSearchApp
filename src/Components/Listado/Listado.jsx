@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
-import { BiLeftArrow, BiRightArrow } from 'react-icons/bi'
 import MovieListContainer from "../MovieListContainer/MovieListContainer";
 import Loader from "../Loader/Loader";
 import { generateNumberArray } from "../../utils/createRange";

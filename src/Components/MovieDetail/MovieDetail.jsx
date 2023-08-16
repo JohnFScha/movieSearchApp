@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Navigate } from "react-router-dom";
-import { Oval } from "react-loader-spinner";
 import Loader from "../Loader/Loader";
 
 const options = {
