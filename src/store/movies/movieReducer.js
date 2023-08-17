@@ -9,7 +9,6 @@ const initialState = {
   loading: false,
   error: "",
   page: 1,
-  id: 0
 };
 
 const moviesReducer = (state = initialState, action) => {

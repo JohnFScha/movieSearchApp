@@ -17,7 +17,7 @@ const Listado = ({ movieData, loading, page, fetchMovies, fetchMoviesRequest }) 
     }, 1500);
   }, []);
 
-  const handlePageChange = useCallback((num) => {
+  const handlePage = useCallback((num) => {
     fetchMoviesRequest(page);
     setTimeout(() => {
       fetchMovies(num);
@@ -39,7 +39,7 @@ const Listado = ({ movieData, loading, page, fetchMovies, fetchMoviesRequest }) 
       ) : (
         <Loader />
       ))}
-      <PageSelect range={range} page={page} handlePage={handlePageChange}/>
+      <PageSelect range={range} page={page} handlePage={handlePage}/>
     </main>
   );
 };
