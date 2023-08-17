@@ -3,7 +3,7 @@ import {
   FETCH_MOVIES_SUCCESS,
   FETCH_MOVIES_REQUEST,
 } from "./movieTypes";
-import { options } from "../../utils/requestOptions";
+import { options, baseUrl } from "../../utils/requestOptions";
 
 export const fetchMoviesRequest = (page) => {
   return {
@@ -30,7 +30,7 @@ export const fetchMovies = (page) => {
   return (dispatch) => {
     dispatch(fetchMoviesRequest(page));
     fetch(
-      `https://api.themoviedb.org/3/movie/popular?language=en-US&page=${page}`,
+      `${baseUrl}/movie/popular?language=en-US&page=${page}`,
       options
     )
       .then((response) => response.json())

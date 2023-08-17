@@ -3,7 +3,7 @@ import {
   FETCH_MOVIE_SUCCESS,
   FETCH_MOVIE_FAILURE,
 } from "./movieTypes";
-import { options } from "../../utils/requestOptions";
+import { options, baseUrl } from "../../utils/requestOptions";
 
 export const fetchMovieRequest = (id) => {
   return {
@@ -29,7 +29,7 @@ export const fetchMovieFailure = (error) => {
 export const fetchMovie = (id) => {
   return (dispatch) => {
     dispatch(fetchMovieRequest(id));
-    fetch(`https://api.themoviedb.org/3/movie/${id}?language=en-US`, options)
+    fetch(`${baseUrl}/movie/${id}?language=en-US`, options)
       .then(response => response.json())
       .then(data => {
         const movie = data;

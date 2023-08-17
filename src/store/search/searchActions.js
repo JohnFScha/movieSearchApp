@@ -4,7 +4,7 @@ import {
   FETCH_SEARCH_FAILURE,
   FETCH_SEARCH_PAGES
 } from "./searchTypes";
-import { options } from "../../utils/requestOptions";
+import { options, baseUrl } from "../../utils/requestOptions";
 
 export const fetchSearchRequest = (page) => {
   return {
@@ -37,7 +37,7 @@ export const fetchSearchPages = (pages) => {
 export const fetchSearch = (page, keyword) => {
   return (dispatch) => {
     dispatch(fetchSearchRequest(page));
-    fetch(`https://api.themoviedb.org/3/search/movie?query=${keyword}&include_adult=false&language=en-US&page=${page}`, options)
+    fetch(`${baseUrl}/search/movie?query=${keyword}&include_adult=false&language=en-US&page=${page}`, options)
       .then((response) => response.json())
       .then((data) => {
         const pages = data.total_pages;

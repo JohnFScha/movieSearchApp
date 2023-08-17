@@ -5,7 +5,7 @@ import Buscador from "../Buscador/Buscador";
 
 const Header = () => {
   return (
-    <header className="flex justify-between bg-black text-white p-3 shadow-lg shadow-gray-600">
+    <header className="flex justify-between bg-black text-white p-3 shadow-lg shadow-gray-600 sticky top-0">
       <div className="flex justify-center items-center gap-5">
         <img src={Logo} alt="alkemy" className="w-11 h-auto" />
         <ul className="flex gap-5">
