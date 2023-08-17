@@ -3,6 +3,7 @@ import { Navigate, useSearchParams } from "react-router-dom";
 import MovieListContainer from "../MovieListContainer/MovieListContainer";
 import Loader from "../Loader/Loader";
 import { generateNumberArray } from "../../utils/createRange";
+import PageSelect from "../PageSelect/PageSelect";
 
 const options = {
   method: "GET",
@@ -47,12 +48,12 @@ const SearchList = () => {
   };
 
   return (
-    <>
+    <main className="min-h-screen">
       {!token && <Navigate to="/" />}
       {loading === true ? (
         <Loader loading={loading} />
       ) : (
-        <main className="min-h-screen">
+        <>
           <h2 className="text-4xl text-center italic my-5">Search results:</h2>
           <MovieListContainer movies={search} />
           <div className="flex justify-around w-5/6 mx-auto my-10">
@@ -72,9 +73,10 @@ const SearchList = () => {
               );
             })}
           </div>
-        </main>
+        </>
       )}
-    </>
+    <PageSelect range={range} page={page}/>
+    </main>
   );
 };
 

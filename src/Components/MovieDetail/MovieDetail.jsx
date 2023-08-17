@@ -1,44 +1,28 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useParams, Navigate } from "react-router-dom";
 import Loader from "../Loader/Loader";
-
-const options = {
-  method: "GET",
-  headers: {
-    accept: "application/json",
-    Authorization:
-      "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIwYTZmNDg0NzNkMjRlZTBjOWM4YTg4NmNiNmFkODQ2ZCIsInN1YiI6IjY0ZDE1MmQ3ZDlmNGE2MDNiNTRhOTU0ZCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.s4_T2lHWSmjDOegqYp1IZqdY0r6ehkr7E9h1Y-nxtzM",
-  },
-};
+import { useSelector, useDispatch } from "react-redux";
+import { fetchMovie } from "../../store";
 
 const MovieDetail = () => {
-  const [movie, setMovie] = useState({});
-  const [loading, setLoading] = useState(true);
-  const id = useParams();
+  const { movie } = useSelector(state => state.movie)
+  const dispatch = useDispatch()
+  const params = useParams();
+  const movieId = params.movieId
   let token = sessionStorage.getItem("token");
-
-  useEffect(() => {
-    const fetchMovie = async () => {
-      const response = await fetch(
-        `https://api.themoviedb.org/3/movie/${id.movieId}?language=en-US`,
-        options
-      );
-      const data = await response.json();
-      setMovie(data);
-      setLoading(false);
-    };
-    setTimeout(() => {
-      fetchMovie();
-    }, 1500);
-  }, [id]);
   
+  useEffect(() => {
+    setTimeout(() => {
+      dispatch(fetchMovie(movieId));
+    }, 1500);
+  });
+
   return (
     <>
       {!token && <Navigate to={"/"} />}
 
-      {loading === true ? (
-        <Loader loading={loading} />
-      ) : (
+      {
+        movie && movie.id ? ( 
         <section className="grid grid-cols-2 items-center p-10 m-10 border border-slate-800 rounded-lg shadow-2xl shadow-slate-800 bg-cyan-900 text-white">
           <div>
             <img
@@ -56,7 +40,7 @@ const MovieDetail = () => {
               <div>
                 <p>Genres: </p>
                 <ul className="list-disc">
-                  {movie.genres.map((genre) => (
+                  {movie && movie.genres.map((genre) => (
                     <li key={genre.id}>{genre.name}</li>
                   ))}
                 </ul>
@@ -72,7 +56,7 @@ const MovieDetail = () => {
               <div>
                 <p>Production companies:</p>
                 <ul className="list-disc">
-                  {movie.production_companies.map((prod) => {
+                  {movie && movie.production_companies.map((prod) => {
                     return (
                       <li key={prod.id}>{prod.name}</li>
                     );
@@ -95,8 +79,10 @@ const MovieDetail = () => {
               </p>
             )}
           </div>
-        </section>
-      )}
+        </section>) : (
+          <Loader />
+        )
+      }
     </>
   );
 };

@@ -1,66 +1,62 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useCallback } from "react";
 import { Navigate } from "react-router-dom";
 import MovieListContainer from "../MovieListContainer/MovieListContainer";
 import Loader from "../Loader/Loader";
 import { generateNumberArray } from "../../utils/createRange";
+import { connect } from "react-redux";
+import { fetchMovies, fetchMoviesRequest } from "../../store";
+import PageSelect from "../PageSelect/PageSelect";
 
-const options = {
-  method: "GET",
-  headers: {
-    accept: "application/json",
-    Authorization:
-      "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIwYTZmNDg0NzNkMjRlZTBjOWM4YTg4NmNiNmFkODQ2ZCIsInN1YiI6IjY0ZDE1MmQ3ZDlmNGE2MDNiNTRhOTU0ZCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.s4_T2lHWSmjDOegqYp1IZqdY0r6ehkr7E9h1Y-nxtzM",
-  },
-};
-
-const Listado = () => {
-  const [movies, setMovies] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [page, setPage] = useState(1)
+const Listado = ({ movieData, loading, page, fetchMovies, fetchMoviesRequest }) => {
   let token = sessionStorage.getItem("token");
   const range = generateNumberArray(1, 10)
   
   useEffect(() => {
-    const fetchMovies = async () => {
-      const response = await fetch(
-         `https://api.themoviedb.org/3/movie/popular?language=en-US&page=${page}`,
-        options
-      );
-      const data = await response.json();
-      setMovies(data.results);
-      setLoading(false);
-    };
     setTimeout(() => {
-      fetchMovies();
+      fetchMovies(page);
+    }, 1500);
+  }, []);
+
+  const handlePageChange = useCallback((num) => {
+    fetchMoviesRequest(page);
+    setTimeout(() => {
+      fetchMovies(num);
     }, 1500);
   }, [page]);
 
-  const handlePage = (num) =>{
-    setPage(num)
-    setLoading(true)
-  }
-
   return (
-    <>
+    <main className="min-h-screen">
       {!token && <Navigate to={"/"} />}
 
-      {loading === true ? (
-        <Loader loading={loading}/>
+      { loading === true ? (
+        <Loader />
       ) : (
-        <main className="min-h-screen">
+        movieData.length !== 0 ? (
+        <>
           <h2 className="text-4xl text-center italic my-5">Popular now</h2>
-          <MovieListContainer movies={movies} />
-        </main>
-      )}
-      <div className="flex justify-between w-5/6 mx-auto my-10">
-        {
-          range.map((num, idx) => {
-            return <button key={idx} onClick={() => handlePage(num)} className={page === num ? "w-16 p-4 rounded-lg bg-slate-300 text-black" : "w-16 p-4 rounded-lg bg-black text-white"}>{num}</button>
-          })
-        }
-      </div>
-    </>
+          <MovieListContainer movies={movieData} />
+        </>
+      ) : (
+        <Loader />
+      ))}
+      <PageSelect range={range} page={page} handlePage={handlePageChange}/>
+    </main>
   );
 };
 
-export default Listado;
+const mapStateToProps = (state) => {
+  return {
+    movieData: state.movies.movies,
+    loading: state.movies.loading,
+    page: state.movies.page
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    fetchMovies: (page) => dispatch(fetchMovies(page)),
+    fetchMoviesRequest: (page) => dispatch(fetchMoviesRequest(page))
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Listado);

@@ -1,7 +1,7 @@
 import React from "react";
 import { Oval } from "react-loader-spinner";
 
-const Loader = ({ loading }) => {
+const Loader = () => {
   return (
     <section className="min-h-screen flex justify-center-center items-center">
       <div className="spinner-container m-auto">

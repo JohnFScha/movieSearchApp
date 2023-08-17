@@ -11,6 +11,7 @@ const MovieListContainer = ({ movies }) => {
   const isMovieInFavorites = (movieId) => {
     return fav.some((favMovie) => favMovie.id === movieId);
   };
+  
   const handleAddToFavorites = (movie) => {
     if (isMovieInFavorites(movie.id)) {
       const updatedFavorites = fav.filter(
