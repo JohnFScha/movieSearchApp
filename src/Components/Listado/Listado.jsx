@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from "react";
+import React, { useEffect } from "react";
 import MovieListContainer from "../MovieListContainer/MovieListContainer";
 import Loader from "../Loader/Loader";
 import { generateNumberArray } from "../../utils/createRange";
@@ -19,17 +19,11 @@ const Listado = ({
     setTimeout(() => {
       fetchMovies(page);
     }, 1500);
-  }, []);
+  }, [page]);
 
-  const handlePage = useCallback(
-    (num) => {
-      fetchMoviesRequest(page);
-      setTimeout(() => {
-        fetchMovies(num);
-      }, 1500);
-    },
-    [page]
-  );
+  const handlePage = (num) => {
+    fetchMoviesRequest(num);
+  };
 
   return (
     <main className="min-h-screen">
