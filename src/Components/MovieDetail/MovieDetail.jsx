@@ -18,19 +18,19 @@ const MovieDetail = () => {
   }, [movieId]);
 
   return (
-    <main className="min-h-screen">
+    <main className="flex justify-center items-center min-h-max">
       {loading === true ? (
         <Loader />
       ) : movie && movie.id ? (
-        <section className="grid grid-cols-2 place-items-center p-8 m-16 max-w-fit border border-slate-800 rounded-lg shadow-2xl shadow-slate-800 bg-cyan-900 text-white">
-          <figure>
+        <section className="grid grid-cols-2 place-items-center p-8 border border-slate-800 rounded-lg shadow-2xl shadow-slate-800 bg-cyan-900 text-white w-11/12 my-10 min-h-max overflow-hidden">
+          <figure className="min-h-max">
             <img
               src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
               alt={movie.title}
-              className="rounded-md"
+              className="rounded-md w-8/12"
             />
           </figure>
-          <div className="flex flex-col gap-5 text-xl">
+          <div className="flex flex-col gap-5 text-xl min-h-max">
             <h2 className="text-5xl italic">{movie.title}</h2>
             <small>
               Original: {movie.original_title} - {movie.original_language}
