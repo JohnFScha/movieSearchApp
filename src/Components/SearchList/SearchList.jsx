@@ -1,13 +1,20 @@
 import React, { useEffect, useCallback } from "react";
 import { fetchSearch, fetchSearchRequest } from "../../store";
-import { Navigate, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import { generateNumberArray } from "../../utils/createRange";
 import { connect } from "react-redux";
 import MovieListContainer from "../MovieListContainer/MovieListContainer";
 import Loader from "../Loader/Loader";
 import PageSelect from "../PageSelect/PageSelect";
 
-const SearchList = ({ search, loading, pages, page, auth, fetchSearch, fetchSearchRequest }) => {
+const SearchList = ({
+  search,
+  loading,
+  pages,
+  page,
+  fetchSearch,
+  fetchSearchRequest,
+}) => {
   const [searchParams] = useSearchParams();
   const keyword = searchParams.get("keyword");
   const range = generateNumberArray(1, pages);
@@ -30,7 +37,6 @@ const SearchList = ({ search, loading, pages, page, auth, fetchSearch, fetchSear
 
   return (
     <main className="min-h-screen">
-      {!auth && <Navigate to="/" />}
       {loading === true ? (
         <Loader />
       ) : search ? (
@@ -52,15 +58,14 @@ const mapStateToProps = (state) => {
     loading: state.search.loading,
     pages: state.search.pages,
     page: state.search.page,
-    auth: state.auth.token
-  }
-}
+  };
+};
 
 const mapDispatchToProps = (dispatch) => {
   return {
     fetchSearch: (page, keyword) => dispatch(fetchSearch(page, keyword)),
-    fetchSearchRequest: (page) => dispatch(fetchSearchRequest(page))
-  }
-}
+    fetchSearchRequest: (page) => dispatch(fetchSearchRequest(page)),
+  };
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchList);

@@ -1,18 +1,17 @@
 import React, { useEffect } from "react";
-import { useParams, Navigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import Loader from "../Loader/Loader";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchMovie, fetchMovieRequest } from "../../store";
 
 const MovieDetail = () => {
-  const { movie, loading } = useSelector(state => state.movie)
-  const { auth } = useSelector(state => state.auth.token)
-  const dispatch = useDispatch()
+  const { movie, loading } = useSelector((state) => state.movie);
+  const dispatch = useDispatch();
   const params = useParams();
-  const movieId = params.movieId
-  
+  const movieId = params.movieId;
+
   useEffect(() => {
-    dispatch(fetchMovieRequest(movieId))
+    dispatch(fetchMovieRequest(movieId));
     setTimeout(() => {
       dispatch(fetchMovie(movieId));
     }, 1500);
@@ -20,12 +19,9 @@ const MovieDetail = () => {
 
   return (
     <main className="min-h-screen">
-      {!auth && <Navigate to={"/"} />}
-
       {loading === true ? (
         <Loader />
-      ) : (
-        movie && movie.id ? ( 
+      ) : movie && movie.id ? (
         <section className="grid grid-cols-2 place-items-center p-8 m-16 max-w-fit border border-slate-800 rounded-lg shadow-2xl shadow-slate-800 bg-cyan-900 text-white">
           <figure>
             <img
@@ -43,13 +39,14 @@ const MovieDetail = () => {
               <div>
                 <p>Genres: </p>
                 <ul className="list-disc">
-                  {movie && movie.genres.map((genre) => (
-                    <li key={genre.id}>{genre.name}</li>
-                  ))}
+                  {movie &&
+                    movie.genres.map((genre) => (
+                      <li key={genre.id}>{genre.name}</li>
+                    ))}
                 </ul>
               </div>
               <div>
-                <p className="text-md">Popularity:</p> 
+                <p className="text-md">Popularity:</p>
                 <p>{movie.popularity.toFixed(2)}</p>
                 <ul className="list-disc">
                   <li>Average: {movie.vote_average.toFixed(2)}</li>
@@ -59,11 +56,10 @@ const MovieDetail = () => {
               <div>
                 <p>Production companies:</p>
                 <ul className="list-disc">
-                  {movie && movie.production_companies.map((prod) => {
-                    return (
-                      <li key={prod.id}>{prod.name}</li>
-                    );
-                  })}
+                  {movie &&
+                    movie.production_companies.map((prod) => {
+                      return <li key={prod.id}>{prod.name}</li>;
+                    })}
                 </ul>
               </div>
             </div>
@@ -82,9 +78,9 @@ const MovieDetail = () => {
               </p>
             )}
           </div>
-        </section>) : (
-          <Loader />
-        )
+        </section>
+      ) : (
+        <Loader />
       )}
     </main>
   );

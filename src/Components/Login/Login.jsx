@@ -1,7 +1,6 @@
-import React, { useEffect, useRef } from "react";
+import React, { useRef } from "react";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
-import { Navigate } from "react-router-dom";
 import { connect } from "react-redux";
 import { requestSession } from "../../store";
 
@@ -34,30 +33,25 @@ const Login = ({ requestSession, auth }) => {
       });
       return;
     }
-    
-    requestSession()
+
+    requestSession();
 
     MySwal.fire({
-      title: 'Login sucessful',
-      icon: 'success',
-      showConfirmButton: true
-    })
-    
+      title: "Login sucessful",
+      icon: "success",
+      showConfirmButton: true,
+    });
   };
 
   return (
-    <>
-    {auth && <Navigate to={'/listado'} />}
-    
     <main className="flex flex-col justify-center items-center gap-5 min-h-screen">
       <h2 className="text-3xl">Login:</h2>
       <form
         onSubmit={submitHandler}
         className="flex flex-col w-2/4 h-80 bg-yellow-200 p-5 
-        rounded-md border-solid border-2 border-zinc-950 justify-around">
-        <label htmlFor="email">
-          Input your mail:
-        </label> 
+        rounded-md border-solid border-2 border-zinc-950 justify-around"
+      >
+        <label htmlFor="email">Input your mail:</label>
         <input
           type="text"
           name="email"
@@ -83,20 +77,19 @@ const Login = ({ requestSession, auth }) => {
         </button>
       </form>
     </main>
-    </>
   );
 };
 
 const mapStateToProps = (state) => {
   return {
-    auth: state.auth.token
-  }
-}
+    auth: state.auth.token,
+  };
+};
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    requestSession: () => dispatch(requestSession())
-  }
-}
+    requestSession: () => dispatch(requestSession()),
+  };
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);
