@@ -6,15 +6,17 @@ import MovieListContainer from "../MovieListContainer/MovieListContainer";
 import Loader from "../Loader/Loader";
 
 const Login = () => {
-  const { movies, page } = useSelector((state) => state.movies);
+  const { movies, page, loading } = useSelector((state) => state.movies);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchMovies(page));
+    setTimeout(() => {
+      dispatch(fetchMovies(page));
+    }, 500);
   }, []);
 
   return (
-    <main className="min-h-full">
+    <main className={loading ? "min-h-screen" : "min-h-full"}>
       <h2 className="text-5xl text-center italic my-5">Popular movies</h2>
       <section className="flex flex-row w-full overflow-x-scroll overflow-y-hidden p-5">
         <MovieListContainer movies={movies} />
