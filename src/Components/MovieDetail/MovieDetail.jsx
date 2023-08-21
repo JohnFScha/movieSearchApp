@@ -6,10 +6,10 @@ import { fetchMovie, fetchMovieRequest } from "../../store";
 
 const MovieDetail = () => {
   const { movie, loading } = useSelector(state => state.movie)
+  const { auth } = useSelector(state => state.auth.token)
   const dispatch = useDispatch()
   const params = useParams();
   const movieId = params.movieId
-  let token = sessionStorage.getItem("token");
   
   useEffect(() => {
     dispatch(fetchMovieRequest(movieId))
@@ -20,7 +20,7 @@ const MovieDetail = () => {
 
   return (
     <main className="min-h-screen">
-      {!token && <Navigate to={"/"} />}
+      {!auth && <Navigate to={"/"} />}
 
       {loading === true ? (
         <Loader />

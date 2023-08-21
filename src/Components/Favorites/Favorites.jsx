@@ -1,31 +1,30 @@
-import React, { useState, useEffect } from 'react'
-import { Navigate } from 'react-router-dom';
-import MovieListContainer from '../MovieListContainer/MovieListContainer';
+  import React from 'react'
+  import { Navigate } from 'react-router-dom';
+  import MovieListContainer from '../MovieListContainer/MovieListContainer';
+  import { connect } from 'react-redux';
 
-const Favorites = () => {
-  const [favorites, setFavorites] = useState([]);
+  const Favorites = ({ favs, auth }) => {
+    const favorites = favs;
 
-  useEffect(() => {
-    const storedFavorites = localStorage.getItem('favs');
-    if (storedFavorites) {
-      setFavorites(JSON.parse(storedFavorites));
+    return (
+      <>
+      {!auth && <Navigate to={'/'} />}
+      <main className="min-h-screen">
+      <h2 className="text-4xl text-center italic my-5">Favorites:</h2>
+      {
+        favorites.length === 0 ? ( <h3 className='text-center'>Nothing here</h3> ) : (
+        <MovieListContainer movies={favorites} /> )
+      }
+      </main>
+      </>
+    )
+  }
+
+  const mapStateToProps = (state) => {
+    return {
+      favs: state.favorites.favs,
+      auth: state.auth.token
     }
-  }, [favorites]);
+  }
 
-  let token = sessionStorage.getItem('token');
-
-  return (
-    <>
-    {!token && <Navigate to={'/'} />}
-    <main className="min-h-screen">
-    <h2 className="text-4xl text-center italic my-5">Favorites:</h2>
-    {
-      favorites.length === 0 ? ( <h3 className='text-center'>Nothing here</h3> ) : (
-      <MovieListContainer movies={favorites} /> )
-    }
-    </main>
-    </>
-  )
-}
-
-export default Favorites
+  export default connect(mapStateToProps)(Favorites);

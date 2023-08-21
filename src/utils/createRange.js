@@ -9,5 +9,5 @@ export function generateNumberArray(start, end) {
     numberArray.push(i);
   }
 
-  return numberArray;
+  return numberArray.length > 15 ? numberArray.splice(0, 15) : numberArray;
 }

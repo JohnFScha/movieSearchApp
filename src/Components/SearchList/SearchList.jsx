@@ -1,31 +1,28 @@
 import React, { useEffect, useCallback } from "react";
-import { useSelector, useDispatch } from "react-redux";
 import { fetchSearch, fetchSearchRequest } from "../../store";
 import { Navigate, useSearchParams } from "react-router-dom";
 import { generateNumberArray } from "../../utils/createRange";
+import { connect } from "react-redux";
 import MovieListContainer from "../MovieListContainer/MovieListContainer";
 import Loader from "../Loader/Loader";
 import PageSelect from "../PageSelect/PageSelect";
 
-const SearchList = () => {
-  const { search, loading, pages, page } = useSelector((state) => state.search);
-  const dispatch = useDispatch();
+const SearchList = ({ search, loading, pages, page, auth, fetchSearch, fetchSearchRequest }) => {
   const [searchParams] = useSearchParams();
   const keyword = searchParams.get("keyword");
-  const token = sessionStorage.getItem("token");
   const range = generateNumberArray(1, pages);
 
   useEffect(() => {
     setTimeout(() => {
-      dispatch(fetchSearch(page, keyword));
+      fetchSearch(page, keyword);
     }, 1500);
-  }, []);
+  }, [keyword]);
 
   const handlePage = useCallback(
     (num) => {
-      dispatch(fetchSearchRequest(page));
+      fetchSearchRequest(page);
       setTimeout(() => {
-        dispatch(fetchSearch(num, keyword));
+        fetchSearch(num, keyword);
       }, 1500);
     },
     [page]
@@ -33,7 +30,7 @@ const SearchList = () => {
 
   return (
     <main className="min-h-screen">
-      {!token && <Navigate to="/" />}
+      {!auth && <Navigate to="/" />}
       {loading === true ? (
         <Loader />
       ) : search ? (
@@ -49,4 +46,21 @@ const SearchList = () => {
   );
 };
 
-export default SearchList;
+const mapStateToProps = (state) => {
+  return {
+    search: state.search.search,
+    loading: state.search.loading,
+    pages: state.search.pages,
+    page: state.search.page,
+    auth: state.auth.token
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    fetchSearch: (page, keyword) => dispatch(fetchSearch(page, keyword)),
+    fetchSearchRequest: (page) => dispatch(fetchSearchRequest(page))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SearchList);

@@ -7,10 +7,9 @@ import { connect } from "react-redux";
 import { fetchMovies, fetchMoviesRequest } from "../../store";
 import PageSelect from "../PageSelect/PageSelect";
 
-const Listado = ({ movieData, loading, page, fetchMovies, fetchMoviesRequest }) => {
-  let token = sessionStorage.getItem("token");
-  const range = generateNumberArray(1, 10)
-  
+const Listado = ({ movieData, loading, page, fetchMovies, fetchMoviesRequest, auth }) => {
+  const range = generateNumberArray(1, 15)
+  console.log(auth)
   useEffect(() => {
     setTimeout(() => {
       fetchMovies(page);
@@ -26,7 +25,7 @@ const Listado = ({ movieData, loading, page, fetchMovies, fetchMoviesRequest }) 
 
   return (
     <main className="min-h-screen">
-      {!token && <Navigate to={"/"} />}
+      {!auth && <Navigate to={"/"} />}
 
       { loading === true ? (
         <Loader />
@@ -48,7 +47,8 @@ const mapStateToProps = (state) => {
   return {
     movieData: state.movies.movies,
     loading: state.movies.loading,
-    page: state.movies.page
+    page: state.movies.page,
+    auth: state.auth.token
   }
 }
 

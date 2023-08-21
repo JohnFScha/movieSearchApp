@@ -17,12 +17,14 @@ const Buscador = () => {
         title: <h2>You must input a keyword</h2>,
         showConfirmButton: true
       })
+      return null
     } else if (keyword.length <= 3) {
       mySwal.fire({
         icon: "error",
         title: <h2>Keyword must be at least 4 characters long</h2>,
         showConfirmButton: true
       })
+      return null
     }
     keywordRef.current.value = ''
     navigate(`/busqueda?keyword=${keyword}`)

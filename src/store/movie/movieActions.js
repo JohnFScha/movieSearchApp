@@ -33,7 +33,6 @@ export const fetchMovie = (id) => {
       .then(response => response.json())
       .then(data => {
         const movie = data;
-        console.log('Request data:',movie)
         dispatch(fetchMovieSuccess(movie));
       })
       .catch(error => {

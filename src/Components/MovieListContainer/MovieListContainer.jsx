@@ -1,28 +1,19 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import { AiOutlineHeart as Outline, AiFillHeart as Fill } from "react-icons/ai";
+import { connect } from "react-redux";
+import { addToFavs, removeFromFavs } from "../../store";
 
-const MovieListContainer = ({ movies }) => {
-  const [fav, setFav] = useState(() => {
-    const storedFavorites = localStorage.getItem("favs");
-    return storedFavorites ? JSON.parse(storedFavorites) : [];
-  });
-
+const MovieListContainer = ({ movies, fav, addToFavs, removeFromFavs }) => {
   const isMovieInFavorites = (movieId) => {
     return fav.some((favMovie) => favMovie.id === movieId);
   };
   
   const handleAddToFavorites = (movie) => {
     if (isMovieInFavorites(movie.id)) {
-      const updatedFavorites = fav.filter(
-        (favMovie) => favMovie.id !== movie.id
-      );
-      setFav(updatedFavorites);
-      localStorage.setItem("favs", JSON.stringify(updatedFavorites));
+      removeFromFavs(movie)
     } else {
-      const updatedFavorites = [...fav, movie];
-      setFav(updatedFavorites);
-      localStorage.setItem("favs", JSON.stringify(updatedFavorites));
+      addToFavs(movie);
     }
   };
 
@@ -77,4 +68,17 @@ const MovieListContainer = ({ movies }) => {
   );
 };
 
-export default MovieListContainer;
+const mapStateToProps = (state) => {
+  return {
+    fav: state.favorites.favs
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addToFavs: (movie) => dispatch(addToFavs(movie)),
+    removeFromFavs: (movie) => dispatch(removeFromFavs(movie))
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(MovieListContainer);

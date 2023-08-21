@@ -3,7 +3,7 @@ import React from "react";
 const PageSelect = ({ range, page, handlePage }) => {
   
   return (
-    <div className="flex justify-between w-5/6 mx-auto my-10">
+    <div className="flex justify-between mx-5 my-10">
       {range.map((num, idx) => {
         return (
           <button

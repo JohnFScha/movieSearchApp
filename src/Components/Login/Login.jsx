@@ -1,13 +1,13 @@
-import React, { useRef } from "react";
-import axios from "axios";
+import React, { useEffect, useRef } from "react";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
+import { connect } from "react-redux";
+import { requestSession } from "../../store";
 
-const Login = () => {
+const Login = ({ requestSession, auth }) => {
   const mailRef = useRef();
   const passwordRef = useRef();
-  const navigate = useNavigate();
   const MySwal = withReactContent(Swal);
 
   const submitHandler = (event) => {
@@ -34,26 +34,20 @@ const Login = () => {
       });
       return;
     }
+    
+    requestSession()
 
-    axios
-      .post("http://challenge-react.alkemy.org", { email, password })
-      .then((res) => {
-        MySwal.fire({
-          icon: "success",
-          title: <h2>Login successful</h2>,
-          showConfirmButton: true
-        });
-        const token = res.data.token;
-        sessionStorage.setItem("token", token);
-        navigate('/')
-      });
+    MySwal.fire({
+      title: 'Login sucessful',
+      icon: 'success',
+      showConfirmButton: true
+    })
+    
   };
-
-  let token = sessionStorage.getItem('token');
 
   return (
     <>
-    {token && <Navigate to={'/listado'} />}
+    {auth && <Navigate to={'/listado'} />}
     
     <main className="flex flex-col justify-center items-center gap-5 min-h-screen">
       <h2 className="text-3xl">Login:</h2>
@@ -63,7 +57,7 @@ const Login = () => {
         rounded-md border-solid border-2 border-zinc-950 justify-around">
         <label htmlFor="email">
           Input your mail:
-        </label>
+        </label> 
         <input
           type="text"
           name="email"
@@ -93,4 +87,16 @@ const Login = () => {
   );
 };
 
-export default Login;
+const mapStateToProps = (state) => {
+  return {
+    auth: state.auth.token
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    requestSession: () => dispatch(requestSession())
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
