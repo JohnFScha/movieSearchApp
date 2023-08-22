@@ -4,13 +4,12 @@ import { Link } from "react-router-dom";
 import Buscador from "../Buscador/Buscador";
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import Dropdown from "../Dropdown/Dropdown";
-import 'animate.css';
 
 const Header = () => {
   const token = useSelector((state) => state.auth.token);
 
   return (
-    <header className="animate__animated animate__fadeInDown sticky top-0">
+    <header>
       <nav className="flex justify-between bg-black text-white p-2 shadow-lg shadow-gray-600">
         <div className="flex justify-center items-center gap-5">
           <img src={Logo} alt="alkemy" className="w-11 h-auto" />

@@ -36,7 +36,7 @@ const Form = () => {
   return (
     <form
       onSubmit={submitHandler}
-      className="flex flex-col bg-black p-5 rounded-3xl border-solid border-2 border-zinc-950 justify-around shadow-2xl"
+      className="flex flex-col bg-black p-5 rounded-3xl border-solid border-2 border-zinc-950 justify-around shadow-2xl z-50"
     >
       <label htmlFor="email">Input your mail:</label>
       <input
