@@ -1,4 +1,4 @@
-# Alchemy Challenge App
+# Movie search app
 
 Welcome to the Alchemy Challenge App! This is a full-stack web application built using React, Redux, and other libraries. Follow the steps below to implement the app locally and deploy it online.
 
